@@ -1,0 +1,30 @@
+package com.henry.messagingdata.entity;
+
+import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Date;
+
+@Data
+@Entity
+@RestResource(rel="tacos", path="tacos")
+public class Taco {
+
+  @Id
+  @GeneratedValue(strategy=GenerationType.AUTO)
+  private Long id;
+  
+  @NotNull
+  @Size(min=5, message="Name must be at least 5 characters long")
+  private String name;
+  
+  private Date createdAt;
+
+  @PrePersist
+  void createdAt() {
+    this.createdAt = new Date();
+  }
+}
